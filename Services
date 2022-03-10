@@ -1,0 +1,40 @@
+using ArteMovels.Models;
+
+namespace ArteMovels.Service;
+
+public static class MovelService
+{
+    static List<Movel> Movels { get; }
+    static int nextId = 3;
+    static MovelService()
+    {
+        Movels = new List<Movel>
+        {
+            new Movel { id = 1, Name = "Cozinha Completa", OrçamentoFree = false },
+            new Movel { id = 2, Name = "Banheiro",OrçamentoFree  = true }
+        };
+    }
+
+    public static List<Movel> GetAll() => Movels;
+    public static Movel? Get (int id) => Movels.FirstOrDefault(p =>p.id ==id);
+      public static void Add(Movel movel)
+    {
+        movel.id = nextId++;
+        Movels.Add(movel);
+    }
+public static void Delete(int id)
+{
+    var pizza = Get (id);
+    if (pizza is null)
+    return;
+Movels.Remove(pizza);
+}
+  
+    public static void Update (Movel pizza )
+    {
+        var index = Movels.FindIndex(p=> p.id == pizza.id);
+        if (index == -1)
+        return;
+        Movels[index] = pizza;
+    }
+}
